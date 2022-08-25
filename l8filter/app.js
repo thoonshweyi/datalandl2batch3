@@ -51,7 +51,7 @@ function sortingazm2(){
         switching = false;
 
         var i = 0;
-        for(i ; i  < getli.length ; i++){
+        for(i ; i  < getli.length - 1 ; i++){
             shouldswitch = false;
             if(getli[i].textContent.toLowerCase() > getli[i+1].textContent.toLowerCase()){
                 shouldswitch = true;
@@ -80,7 +80,7 @@ function sortingzam2(){
         switching = false;
 
         var i = 0;
-        for(i ; i  < getli.length ; i++){
+        for(i ; i  < getli.length - 1 ; i++){
             shouldswitch = false;
             if(getli[i].textContent.toLowerCase() < getli[i+1].textContent.toLowerCase()){
                 shouldswitch = true;
