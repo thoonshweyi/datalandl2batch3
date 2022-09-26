@@ -45,12 +45,86 @@ const getc_img = document.getElementById('c_img');
 const getd_img = document.getElementById('d_img');
 // console.log(geta_img);
 
+const getbtn = document.querySelector('.btn');
+
+let currentidx = 0;
+var score = 0;
+
 startquestion();
 function startquestion(){
-    getquestion.textContent = database[0].question;
-    geta_img.src = database[0].a;
-    getb_img.src = database[0].b;
-    getc_img.src = database[0].c;
-    getd_img.src = database[0].d;
+    removeselects();
 
+    const currentqes = database[currentidx];
+
+    getquestion.textContent = currentqes.question;
+    geta_img.src = currentqes.a;
+    getb_img.src = currentqes.b;
+    getc_img.src = currentqes.c;
+    getd_img.src = currentqes.d;
+
+}
+
+function getsingleanswer(){
+    let answer;
+    // console.log(getansers);
+    getansers.forEach(function(getanswer){
+        if(getanswer.checked){
+            answer = getanswer.id;
+        }
+    });
+    // console.log(answer);
+    return answer;
+}
+
+getbtn.addEventListener('click',function(){
+    const answer = getsingleanswer();
+
+    if(answer){
+        // console.log(answer);
+        if(answer === database[currentidx].correctanswer){
+            score++;
+        }
+
+        currentidx++;
+        if(currentidx < database.length){
+            startquestion();
+        }else{
+            // console.log(score);
+            getcontainer.innerHTML = `
+                <h3>Total Score : ${score*25}</h3>
+                <h4>You answer correctly at ${score} / ${database.length} questions.</h4>
+                <!-- <button type="button" class="btn" ondblclick="location.reload();">Double Click To Reload</button> -->
+                <button type="button" class="btn" onclick="doubleclick()">Double Click To Reload</button>
+            
+                `
+        }
+    }else{
+        window.alert("Choose One Answer")
+    }
+});
+
+function removeselects(){
+    getansers.forEach(function(getanswer){
+        return getanswer.checked = false;
+    });
+}
+
+let clicktimes = 0;
+function doubleclick(){
+    // console.log('hay i am working');
+
+    console.log(clicktimes);
+    if(clicktimes === 0){
+        clicktimes = new Date().getTime();
+        // clicktimes = new Date().now();
+    }else{
+        if(new Date().getTime() - clicktimes < 800){
+            // console.log('hello');
+            location.reload();
+
+            clicktimes = 0;
+        }else{
+            clicktimes = new Date().getTime();
+        }
+    }
 }
